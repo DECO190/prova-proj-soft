@@ -18,8 +18,8 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public List<Course> getCourses() {
-        return courseService.getCourses();
+    public List<Course> getCourses(@PathVariable(required = false) String courseName) {
+        return courseService.getCourses(courseName);
     }
 
     @PutMapping("/courses/{id}/students")

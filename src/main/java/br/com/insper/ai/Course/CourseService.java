@@ -42,7 +42,17 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public List<Course> getCourses() {
+    public List<Course> getCourses(String courseName) {
+        if (courseName != null) {
+            Course course = courseRepository.findByName(courseName);
+
+            if (course == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
+            }
+
+            return List.of(course);
+        }
+
         return courseRepository.findAll();
     }
 
@@ -56,7 +66,7 @@ public class CourseService {
         Optional<Course> courseQuery = courseRepository.findById(id);
 
         if (courseQuery.isEmpty()) {
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
         }
 
         Course course = courseQuery.get();
@@ -67,6 +77,8 @@ public class CourseService {
 
         course.getStudentsCPF().add(studentCPF);
 
-        return courseRepository.save(course);
+        courseRepository.save(course);
+
+        return course;
     }
 }
