@@ -11,6 +11,8 @@
 
 - IP da máquina: **34.227.68.108:8080**
 
+![img](./images/actions.png)
+---
 ![img](./images/aws.png)
 ---
 ![img](./images/req-put.png)
