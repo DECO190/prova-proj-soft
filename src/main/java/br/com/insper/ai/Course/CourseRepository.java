@@ -1,4 +1,9 @@
 package br.com.insper.ai.Course;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public class CourseRepository {
+
+@Repository
+public interface CourseRepository extends MongoRepository<Course, String> {
+
 }
