@@ -1,0 +1,7 @@
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/AiApplication.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/Course.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/CourseController.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/CourseRepository.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/CourseService.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/DTOs/UpdateCourseStudentsDTO.java
+/Users/andreoliveira/Documents/INSPER/4º SEMESTRE/PROJETO SOFTWARE AGIL/prova-proj-soft/src/main/java/br/com/insper/ai/Course/DTOs/VerifyUserCpfDTO.java

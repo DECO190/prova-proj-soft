@@ -1,0 +1,7 @@
+br/com/insper/ai/Course/CourseRepository.class
+br/com/insper/ai/Course/DTOs/UpdateCourseStudentsDTO.class
+br/com/insper/ai/Course/DTOs/VerifyUserCpfDTO.class
+br/com/insper/ai/AiApplication.class
+br/com/insper/ai/Course/Course.class
+br/com/insper/ai/Course/CourseService.class
+br/com/insper/ai/Course/CourseController.class

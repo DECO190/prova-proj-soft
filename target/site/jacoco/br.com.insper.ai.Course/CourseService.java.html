@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CourseService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ai</a> &gt; <a href="index.source.html" class="el_package">br.com.insper.ai.Course</a> &gt; <span class="el_source">CourseService.java</span></div><h1>CourseService.java</h1><pre class="source lang-java linenums">package br.com.insper.ai.Course;
+
+import br.com.insper.ai.Course.DTOs.UpdateCourseStudentsDTO;
+import br.com.insper.ai.Course.DTOs.VerifyUserCpfDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L16">public class CourseService {</span>
+    @Autowired
+    private CourseRepository courseRepository;
+
+    public Boolean checkCPF(String cpf) {
+<span class="fc" id="L21">        RestTemplate restTemplate = new RestTemplate();</span>
+
+        try {
+<span class="fc" id="L24">            ResponseEntity&lt;VerifyUserCpfDTO&gt; response = restTemplate.getForEntity(&quot;http://184.72.80.215:8080/usuario/&quot; + cpf, VerifyUserCpfDTO.class);</span>
+
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">            return response.getStatusCode() == HttpStatus.OK;</span>
+<span class="fc" id="L27">        } catch (Exception e) {</span>
+<span class="fc" id="L28">            return false;</span>
+        }
+    }
+
+
+    public Course createCourse(Course course) {
+<span class="pc bpc" id="L34" title="2 of 6 branches missed.">        if (course.getDescription() == null || course.getName() == null || course.getTeacherCPF() == null) {</span>
+<span class="fc" id="L35">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Missing required fields&quot;);</span>
+        }
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!checkCPF(course.getTeacherCPF())) {</span>
+<span class="fc" id="L39">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Invalid CPF&quot;);</span>
+        }
+
+<span class="fc" id="L42">        return courseRepository.save(course);</span>
+    }
+
+    public List&lt;Course&gt; getCourses(String courseName) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (courseName != null) {</span>
+<span class="fc" id="L47">            Course course = courseRepository.findByName(courseName);</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (course == null) {</span>
+<span class="fc" id="L50">                throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Course not found&quot;);</span>
+            }
+
+<span class="fc" id="L53">            return List.of(course);</span>
+        }
+
+<span class="fc" id="L56">        return courseRepository.findAll();</span>
+    }
+
+    public Course updateCourseStudents(String id, UpdateCourseStudentsDTO updateCourseStudentsDTO) {
+<span class="fc" id="L60">        String studentCPF = updateCourseStudentsDTO.getStudentCPF();</span>
+
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (!checkCPF(studentCPF)) {</span>
+<span class="fc" id="L63">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Invalid CPF&quot;);</span>
+        }
+
+<span class="fc" id="L66">        Optional&lt;Course&gt; courseQuery = courseRepository.findById(id);</span>
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (courseQuery.isEmpty()) {</span>
+<span class="nc" id="L69">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Course not found&quot;);</span>
+        }
+
+<span class="fc" id="L72">        Course course = courseQuery.get();</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (course.getStudentsCPF().contains(studentCPF)) {</span>
+<span class="nc" id="L75">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Student already enrolled in course&quot;);</span>
+        }
+
+<span class="fc" id="L78">        course.getStudentsCPF().add(studentCPF);</span>
+
+<span class="fc" id="L80">        courseRepository.save(course);</span>
+
+<span class="fc" id="L82">        return course;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
